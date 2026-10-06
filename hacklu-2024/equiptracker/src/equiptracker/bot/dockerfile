@@ -1,0 +1,20 @@
+FROM node:20
+
+WORKDIR /app
+
+# puppeteer firefox needs dependencies so we just install firefox-esr but dont use it
+RUN apt-get update && apt-get install -y firefox-esr
+
+
+ENV PUPPETEER_PRODUCT=firefox
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+RUN npm install express puppeteer
+RUN npx puppeteer browsers install firefox
+
+
+ADD index.js .
+
+EXPOSE 80
+
+CMD ["node", "index.js"]

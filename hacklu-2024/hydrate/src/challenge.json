@@ -1,0 +1,19 @@
+{
+    "type": "docker-compose",
+    "ttl": 300,
+    "docker-compose": {
+        "network": "challenge-on-demand",
+        "service": "app"
+    },
+    "forward": "tcp",
+
+    "tcp": {
+        "domain": "hydrate.today",
+        "protocol": "https",
+        "port": 9090
+    },
+    "pow": {
+        "type": "hash",
+        "difficulty": 6
+    }
+}

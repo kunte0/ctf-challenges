@@ -1,0 +1,19 @@
+{
+    admin off
+}
+
+# HTTP -> HTTPS redirect for everything
+:80 {
+    redir https://{host}{uri}
+}
+
+# HTTPS on 443 -> chall service (port 80 in the chall container)
+{$DOMAIN} {
+    tls /etc/letsencrypt/live/{$DOMAIN}/fullchain.pem /etc/letsencrypt/live/{$DOMAIN}/privkey.pem
+    reverse_proxy bot-runner:8080
+    log {
+        output stdout
+        format console
+        level info
+    }
+}

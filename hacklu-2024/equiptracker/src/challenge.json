@@ -1,0 +1,22 @@
+{
+    "type": "docker-compose",
+    "ttl": 600,
+    "docker-compose": {
+        "network": "challenge-on-demand",
+        "service": "traefik"
+    },
+    "forward": "tcp",
+
+    "tcp": {
+        "domain": "equiptracker.fit",
+        "protocol": "https",
+        "port": 80
+    },
+    "pow": {
+        "type": "hash",
+        "difficulty": 6
+    },
+    "reaper": {
+        "interval": 10
+    }
+}

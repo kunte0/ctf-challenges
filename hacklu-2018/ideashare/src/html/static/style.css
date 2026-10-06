@@ -1,0 +1,22 @@
+.row{
+    padding-top:20px;
+}
+.padme{
+    padding-top:60px;
+}
+img{
+    padding-bottom: 5px;
+}
+textarea:hover, 
+textarea:active, 
+textarea:focus
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+}
+#textbox{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: 240px;
+    resize: none;
+}

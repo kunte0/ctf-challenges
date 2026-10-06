@@ -1,0 +1,34 @@
+From: admin <admin@pushgainpull.club>
+To: Checker <checker@pushgainpull.club>
+Subject: Gib doch Flag
+MIME-Version: 1.0
+Content-Type: multipart/encrypted;
+ protocol="application/pgp-encrypted";
+ boundary="XXX"
+
+This is an OpenPGP/MIME encrypted message.
+--XXX
+Content-Type: application/pgp-encrypted
+
+Version: 1
+
+--XXX
+Content-Type: application/octet-stream; name="encrypted.asc"
+Content-Disposition: inline; filename="encrypted.asc"
+
+-----BEGIN PGP MESSAGE-----
+
+hF4DLO2D57GLAYkSAQdAJFNwdUo8qda6xbHNnNCMxkIv3c0HnbNcuch+/uo5tCcw
+onNSXaXThImLyjMrLfWMj8NJiGvHUME9h4WapsJ8cdeZBWA+msFS5p8PO3RptMnj
+1MCiAQkCEJUTY6555GMZ0hVc/TeCwasXgxTaEqVAOSRqKldG5cxb5BrVkHlGwJNb
+CzhBCVjaFQ39GqQW37gQlIPYaRdiyCv3D5bSBh62NQShMi+T+n9e5lIYSyz0+7M0
+DsQ4tNtUERoEAt5q43Ewq26jLfILFh6n0PUBIKYub+y27PUbzWGyR5mOZJp5lrOd
+WMC+efANUsMNlHvsVn0oQsLwNV0jX7tOcgnCgsDDs8IQkSamWiwDGk9SrIgbRACo
+0jJoERHbBn5cDzZVo99UcJxJZNfebf6dYUjKwYX8jofb2alw8u4lfekWyiGbV7OR
+wo/MU5Ugfc09hObIumzZIIHJee7Hx1SvPRRKoowgg6RfFl0cXkuLO46ySbZiXgK6
+2+VBURLJ90mZ/arzqLaUY9948HDhZZ1u06mBCdjP0DWdE8Ba+wOAi2eeUP5HcOZ+
+Bw39c+sXdpFrZDHDNvLPPSLQecv6
+=inpn
+-----END PGP MESSAGE-----
+
+--XXX--

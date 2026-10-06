@@ -1,0 +1,12 @@
+{
+    "docker_image": "src-bot-instance",
+    "docker_network": "bot-net",
+    "use_turnstile": true,
+    "turnstile_secret_key": "<redacted: Turnstile secret key>",
+    "turnstile_site_key": "<redacted: Turnstile site key>",
+    "worker_count": 2,
+    "timeout_secs": 10,
+    "link_pattern": "^https?:\/\/.*",
+    "cookies": [],
+    "flag": "flag{extension_rebellion_v3}"
+}

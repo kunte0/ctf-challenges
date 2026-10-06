@@ -1,0 +1,22 @@
+services:
+  traefik:
+    build:
+      context: ./traefik
+    command:
+      - "--configFile=/config/traefik.yml"
+    ports:
+      - "80:80"
+    environment:
+      - APPDOMAIN=${APPDOMAIN}
+  
+  nginx:
+    build:
+      context: ./nginx
+
+  bot:
+    build:
+      context: ./bot
+
+    environment:
+      - APPDOMAIN=${APPDOMAIN}
+      - FLAG=${FLAG}

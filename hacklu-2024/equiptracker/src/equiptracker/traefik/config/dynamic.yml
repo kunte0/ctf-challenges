@@ -1,0 +1,43 @@
+http:
+  routers:
+    dashboard:
+      rule: 'Host(`{{ env "APPDOMAIN" | default "app.localhost" }}`) && Query(`debug`, `1`) || PathPrefix(`/dashboard`) || PathPrefix(`/api`)'
+      service: api@internal
+    bot:
+      rule: 'Host(`{{ env "APPDOMAIN" | default "app.localhost" }}`) && Query(`bot`, `1`) || PathPrefix(`/bot`)'
+      service: bot
+    nginx:
+      rule: 'Host(`{{ env "APPDOMAIN" | default "app.localhost" }}`)'
+      service: nginx
+      middlewares:
+        - maxage
+        - coop
+        - cache-on-steroids
+
+
+  services:
+    nginx:
+      loadBalancer:
+        servers:
+          - url: "http://nginx:80"
+    bot:
+      loadBalancer:
+        servers:
+          - url: "http://bot:80"
+
+  middlewares:
+    cache-on-steroids:
+      plugin:
+        plugin-simplecache:
+          path: /tmp/
+          CacheQueryParams: True
+
+    maxage:
+      headers:
+        customResponseHeaders:
+          Cache-Control: "max-age=60"
+    coop:
+      headers:
+        customResponseHeaders:
+          Cross-Origin-Opener-Policy: "same-origin"
+

@@ -1,0 +1,30 @@
+services:
+    chall:
+        build: ./chall
+        restart: unless-stopped
+#       ports:
+#           - "127.0.0.1:8080:80"
+        volumes:
+            - ./chall/www:/var/www/html:ro
+        networks:
+            - proxy-net
+
+    bot:
+        build: ./bot
+        restart: unless-stopped
+#       ports:
+#           - "127.0.0.1:1337:1337"
+        env_file:
+            - .env
+        init: true
+        environment:
+            - DOMAIN=${DOMAIN}
+            - FLAG=${FLAG}
+            - HMAC_SECRET=${HMAC_SECRET}
+        networks:
+            - proxy-net
+
+
+networks:
+    proxy-net:
+        name: proxy-net

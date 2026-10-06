@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "TagDeprecater",
+  "version": "1.0",
+  "description": "Fix the web by deprecating HTML tags.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "sw.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "no_entry.png"
+  },
+  "icons": {
+    "16": "no_entry.png",
+    "48": "no_entry.png",
+    "128": "no_entry.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

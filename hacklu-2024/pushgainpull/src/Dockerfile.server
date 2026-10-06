@@ -1,0 +1,12 @@
+FROM python:3-alpine
+
+RUN apk update \
+    && apk add --no-cache gnupg \
+    # Install python dependencies
+    && pip install aiosmtpd python-gnupg
+
+COPY public/ /public/
+
+WORKDIR /public
+
+CMD ["python", "maild.py"]

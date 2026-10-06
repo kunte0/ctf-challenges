@@ -1,0 +1,22 @@
+services:
+    caddy:
+        image: caddy:latest
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - /etc/letsencrypt:/etc/letsencrypt:ro
+            - ./Caddyfile:/etc/caddy/Caddyfile:ro
+            - ./caddy_data:/data
+            - ./caddy_config:/config
+        environment:
+            - DOMAIN=deprecate.marquee.lol
+        networks:
+            - proxy-net
+
+
+networks:
+    proxy-net:
+        name: proxy-net
+        external: true

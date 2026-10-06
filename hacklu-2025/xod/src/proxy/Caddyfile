@@ -1,0 +1,32 @@
+{
+    admin off
+}
+
+# HTTP -> HTTPS redirect for everything
+:80 {
+    redir https://{host}{uri}
+}
+
+# HTTPS on 443 -> chall service (port 80 in the chall container)
+{$DOMAIN} {
+    tls /etc/letsencrypt/live/{$DOMAIN}/fullchain.pem /etc/letsencrypt/live/{$DOMAIN}/privkey.pem
+    log {
+        output stdout
+        format console
+        level info
+    }
+    reverse_proxy chall:80
+}
+
+# HTTPS on 1337 -> bot service (port 1337 in the bot container)
+{$DOMAIN}:1337 {
+    tls /etc/letsencrypt/live/{$DOMAIN}/fullchain.pem /etc/letsencrypt/live/{$DOMAIN}/privkey.pem
+    log {
+        output stdout
+        format console
+        level info
+    }
+    reverse_proxy bot:1337
+}
+
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏋️</text></svg>">
+    <title>Equip Tracker</title>
+    <style>
+        html {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        body {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 5px;
+            min-width: 150px;
+        }
+        input {
+            flex: 1;
+        }
+        button {
+            flex-shrink: 0;
+        }
+        #addItemBtn::before {
+            content: url('static/plus-circle.svg');
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        #deleteAllBtn::before {
+            content: url('static/trash.svg');
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        #searchBtn::before {
+            content: url('static/search.svg');
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        #found, #not-found {
+            margin-top: 10px;
+            color: #2c3e50;
+        }
+        #found::after {
+            content: url('static/emoji-heart-eyes.svg');
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        #notFound::after {
+            content: url('static/emoji-frown.svg');
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        #item-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .item {
+            padding: 10px;
+            background-color: #ecf0f1;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        #not-found-image {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #not-found-image img {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Equip Tracker</h1>
+
+    <div class="input-group">
+        <input type="text" id="itemName" placeholder="Enter equipment name" />
+        <button onclick="addItem()" id="addItemBtn">Add Item</button>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="searchTerm" placeholder="Search equipment" />
+        <button onclick="searchItems()" id="searchBtn">Search</button>
+    </div>
+
+    <div class="input-group">
+        <button onclick="deleteAll()" id="deleteAllBtn">Delete All</button>
+    </div>
+
+    <div id="itemList"></div>
+
+    <p id="found" class="hidden"><span id="numberFound"></span> items found.</p>
+    <p id="notFound" class="hidden">No items found.</p>
+
+
+    <script>
+        itemName.onkeyup = (event) => {
+            if (event.key === 'Enter') {
+                addItem()
+            }
+        }
+
+        searchTerm.onkeyup = (event) => {
+            if (event.key === 'Enter') {
+                searchItems()
+            }
+        }
+
+        window.onload = () => {
+            render()
+        }
+
+        window.onhashchange = () => {
+            render(window.location.hash.slice(1))
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) {
+                return parts.pop().split(';').shift();
+            }
+            return null;
+        }
+
+        function render(filter=null) {
+            itemList.innerHTML = ''
+            let items = JSON.parse(getCookie('gymInventory')) || []
+
+            if (filter) {
+                items = items.filter(item => item.toLowerCase().includes(filter.toLowerCase()))
+                if(items.length) {
+                    numberFound.textContent = items.length
+                    notFound.classList.add('hidden')
+                    found.classList.remove('hidden')
+                } else {
+                    found.classList.add('hidden')
+                    notFound.classList.remove('hidden')
+                }
+                
+            }
+
+            items.forEach(item => {
+                const itemDiv = document.createElement('div')
+                itemDiv.classList.add('item')
+                itemDiv.textContent = item
+                itemList.appendChild(itemDiv)
+            })
+        }
+
+        function searchItems() {
+            window.location.hash = searchTerm.value.toLowerCase()
+        }
+
+
+        function addItem() {
+            const newName = itemName.value.trim()
+            if (newName === '') {
+                alert("Please enter an equipment name.")
+                return
+            }
+
+            let items = JSON.parse(getCookie('gymInventory')) || []
+            items.push(newName)
+            document.cookie = `gymInventory=${JSON.stringify(items)}`; 
+            itemName.value = ''
+            render()
+        }
+
+        function deleteAll() {
+            document.cookie = 'gymInventory=; expires=Thu, 01 Jan 1970 00:00:00 UTC;'
+            render()
+        }
+
+    </script>
+
+</body>
+</html>

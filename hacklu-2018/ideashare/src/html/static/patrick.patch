@@ -1,0 +1,16 @@
+--- Converter.php	2018-10-12 16:57:30.000000000 +0200
++++ new.php	2018-10-12 17:01:30.000000000 +0200
+@@ -101,9 +101,10 @@
+         //make sure inline comments are detected and converted correctly
+         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
+         $value = preg_replace('/[^\\\:]\/\/(.*)$/m', '/**/$1', $value);
+-        $value = preg_replace('/([^\-&])#.*[\r\n\v\f]/m', '$1', $value);
+-        $value = preg_replace('/([^&\-])#.*\n/m', '$1 ', $value);
+-        $value = preg_replace('/^#.*\n/m', ' ', $value);
++        // patrick patched this https://media.giphy.com/media/xUOxfgbaNfaalesF20/giphy.gif
++        // $value = preg_replace('/([^\-&])#.*[\r\n\v\f]/m', '$1', $value);
++        // $value = preg_replace('/([^&\-])#.*\n/m', '$1 ', $value);
++        // $value = preg_replace('/^#.*\n/m', ' ', $value);
+ 
+         return $value;
+     }

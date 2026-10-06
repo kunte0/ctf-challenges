@@ -1,0 +1,1 @@
+flag{lul_php_challenge_1n_2021_lul}

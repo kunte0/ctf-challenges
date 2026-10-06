@@ -1,0 +1,10 @@
+# docker run -i --rm bot 'http://your-url-here'
+
+services:
+    bot:
+        build: .
+        restart: no
+        environment:
+            - TIMEOUT_SECS=10
+            - FLAG=flag{***************************}
+        command: http://your-url-here

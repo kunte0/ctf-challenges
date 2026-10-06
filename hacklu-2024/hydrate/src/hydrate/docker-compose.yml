@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "9090:9090"
+    env_file:
+      - .env
+    tty: true
+    restart: unless-stopped
